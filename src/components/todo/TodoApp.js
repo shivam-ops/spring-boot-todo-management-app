@@ -16,48 +16,100 @@ class LoginComponent extends React.Component {
     super(props);
 
     this.state = {
-      username: "in28minutes",
+      username: "shivam",
       password: "",
+      hasLoginFailed: false,
+      showSuccessMessage: false,
     };
 
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.loginClicked = this.loginClicked.bind(this);
+    // this.handleUsernameChange = this.handleUsernameChange.bind(this);
+    // this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
-  handleUsernameChange(event) {
-    console.log("Username>>> ", event.target.value);
+  handleChange(event) {
+    //console.log("Handle Change ", event.target.name);
     this.setState({
-      username: event.target.value,
+      [event.target.name]: event.target.value,
     });
   }
 
-  handlePasswordChange(event) {
-    console.log("Password>>> ", event.target.value);
-    this.setState({
-      password: event.target.value,
-    });
+  loginClicked() {
+    if (
+      this.state.username === "shivam" &&
+      this.state.password === "linkinspark"
+    ) {
+      console.log("Successful!");
+      this.setState({
+        hasLoginFailed: false,
+        showSuccessMessage: true,
+      });
+    } else {
+      console.log("Failed");
+      this.setState({
+        showSuccessMessage: false,
+        hasLoginFailed: true,
+      });
+    }
   }
+
+  // handleUsernameChange(event) {
+  //   console.log("Username>>> ", event.target.value);
+  //   this.setState({
+  //     username: event.target.value,
+  //   });
+  // }
+
+  // handlePasswordChange(event) {
+  //   console.log("Password>>> ", event.target.value);
+  //   this.setState({
+  //     password: event.target.value,
+  //   });
+  // }
 
   render() {
     return (
       <div>
+        {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} /> */}
+        {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+        {this.state.showSuccessMessage && <div>Login sucessful</div>}
+        {/* <ShowLoginSuccessMessage
+          showSuccessMessage={this.state.showSuccessMessage}
+        /> */}
         User Name:{" "}
         <input
           type="text"
           name="username"
           value={this.state.username}
-          onChange={this.handleUsernameChange}
+          onChange={this.handleChange}
         />
         Password:{" "}
         <input
           type="password"
           name="password"
           value={this.state.password}
-          onChange={this.handlePasswordChange}
+          onChange={this.handleChange}
         />
-        <button>Login</button>
+        <button onClick={this.loginClicked}>Login</button>
       </div>
     );
+  }
+}
+
+function ShowInvalidCredentials(props) {
+  if (props.hasLoginFailed) {
+    return <div>Invalid Credentials</div>;
+  } else {
+    return null;
+  }
+}
+
+function ShowLoginSuccessMessage(props) {
+  if (props.showSuccessMessage) {
+    return <div>Login sucessful</div>;
+  } else {
+    return null;
   }
 }
 
