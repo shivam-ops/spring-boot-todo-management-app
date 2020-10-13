@@ -124,26 +124,28 @@ class ListTodosComponent extends React.Component {
     return (
       <div>
         <h1>List Todos</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Description</th>
-              <th>Target Date</th>
-              <th>Is Completed?</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.todos.map((todo) => (
+        <div className="container">
+          <table className="table">
+            <thead>
               <tr>
-                <td>{todo.id}</td>
-                <td>{todo.description}</td>
-                <td>{todo.targetDate.toString()}</td>
-                <td>{todo.done.toString()}</td>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Target Date</th>
+                <th>Is Completed?</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.todos.map((todo) => (
+                <tr>
+                  <td>{todo.id}</td>
+                  <td>{todo.description}</td>
+                  <td>{todo.targetDate.toString()}</td>
+                  <td>{todo.done.toString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -152,10 +154,15 @@ class ListTodosComponent extends React.Component {
 class WelcomeComponent extends React.Component {
   render() {
     return (
-      <div>
-        Welcome {this.props.match.params.name}. You can manage your todos{" "}
-        <Link to="/todos">here</Link>
-      </div>
+      <>
+        <h1>Welcome!</h1>
+        <div className="container">
+          <div>
+            Welcome {this.props.match.params.name}. You can manage your todos{" "}
+            <Link to="/todos">here</Link>
+          </div>
+        </div>
+      </>
     );
   }
 }
@@ -227,27 +234,34 @@ class LoginComponent extends React.Component {
   render() {
     return (
       <div>
-        {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} /> */}
-        {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-        {this.state.showSuccessMessage && <div>Login sucessful</div>}
-        {/* <ShowLoginSuccessMessage
+        <h1>Login</h1>
+        <div className="container">
+          {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} /> */}
+          {this.state.hasLoginFailed && (
+            <div className="alert alert-danger">Invalid Credentials</div>
+          )}
+          {this.state.showSuccessMessage && <div>Login sucessful</div>}
+          {/* <ShowLoginSuccessMessage
           showSuccessMessage={this.state.showSuccessMessage}
         /> */}
-        User Name:{" "}
-        <input
-          type="text"
-          name="username"
-          value={this.state.username}
-          onChange={this.handleChange}
-        />
-        Password:{" "}
-        <input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <button onClick={this.loginClicked}>Login</button>
+          User Name:{" "}
+          <input
+            type="text"
+            name="username"
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+          Password:{" "}
+          <input
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <button className="btn btn-success" onClick={this.loginClicked}>
+            Login
+          </button>
+        </div>
       </div>
     );
   }
