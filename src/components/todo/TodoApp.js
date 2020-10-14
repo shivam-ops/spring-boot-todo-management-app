@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import AuthenticationService from "./AuthenticationService";
 import "./TodoApp.css";
 
 class TodoApp extends React.Component {
@@ -54,7 +55,11 @@ class Header extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/logout">
+                <Link
+                  className="nav-link"
+                  to="/logout"
+                  onClick={AuthenticationService.logout}
+                >
                   Logout
                 </Link>
               </li>
@@ -203,6 +208,10 @@ class LoginComponent extends React.Component {
       this.state.password === "linkinspark"
     ) {
       console.log("Successful!");
+      AuthenticationService.registerSuccessfulLogin(
+        this.state.username,
+        this.state.password
+      );
       this.props.history.push(`/welcome/${this.state.username}`);
       this.setState({
         hasLoginFailed: false,
