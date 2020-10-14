@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import AuthenticationService from "./AuthenticationService";
+import AuthenticatedRoute from "./AuthenticatedRoute";
 import "./TodoApp.css";
 
 class TodoApp extends React.Component {
@@ -12,9 +13,12 @@ class TodoApp extends React.Component {
           <Switch>
             <Route path="/" exact component={LoginComponent} />
             <Route path="/login" component={LoginComponent} />
-            <Route path="/welcome/:name" component={WelcomeComponent} />
-            <Route path="/todos" component={ListTodosComponent} />
-            <Route path="/logout" component={LogoutComponent} />
+            <AuthenticatedRoute
+              path="/welcome/:name"
+              component={WelcomeComponent}
+            />
+            <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
+            <AuthenticatedRoute path="/logout" component={LogoutComponent} />
             <Route component={ErrorComponent} />
           </Switch>
           <Footer />
@@ -28,41 +32,51 @@ class TodoApp extends React.Component {
 
 class Header extends React.Component {
   render() {
+    const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+
     return (
       <div>
         <header>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <div className="navbar-brand">
-              <Link>ShivamJS</Link>
+              <Link to="/">ShivamJS</Link>
             </div>
             <ul className="navbar-nav">
-              <li>
-                <Link className="nav-link" to="/welcome/shivam">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" to="/todos">
-                  Todos
-                </Link>
-              </li>
+              {isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link" to="/welcome/shivam">
+                    Home
+                  </Link>
+                </li>
+              )}
+              {isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link" to="/todos">
+                    Todos
+                  </Link>
+                </li>
+              )}
             </ul>
 
             <ul className="navbar-nav navbar-collapse justify-content-end">
-              <li>
-                <Link className="nav-link" to="/">
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="nav-link"
-                  to="/logout"
-                  onClick={AuthenticationService.logout}
-                >
-                  Logout
-                </Link>
-              </li>
+              {!isUserLoggedIn && (
+                <li>
+                  <Link className="nav-link" to="/">
+                    Login
+                  </Link>
+                </li>
+              )}
+              {isUserLoggedIn && (
+                <li>
+                  <Link
+                    className="nav-link"
+                    to="/logout"
+                    onClick={AuthenticationService.logout}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </header>
@@ -141,7 +155,7 @@ class ListTodosComponent extends React.Component {
             </thead>
             <tbody>
               {this.state.todos.map((todo) => (
-                <tr>
+                <tr key={todo.id}>
                   <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.targetDate.toString()}</td>
