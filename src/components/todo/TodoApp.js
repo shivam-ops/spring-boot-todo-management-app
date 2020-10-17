@@ -1,6 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import AuthenticationService from "./AuthenticationService";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import LoginComponent from "./LoginComponent";
 import ListTodosComponent from "./ListTodosComponent";
