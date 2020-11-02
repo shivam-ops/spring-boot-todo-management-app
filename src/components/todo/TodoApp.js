@@ -8,6 +8,7 @@ import WelcomeComponent from "./WelcomeComponent";
 import ErrorComponent from "./ErrorComponent";
 import Footer from "./Footer";
 import LogoutComponent from "./LogoutComponent";
+import TodoComponent from "./TodoComponent";
 
 import "./TodoApp.css";
 
@@ -24,6 +25,7 @@ class TodoApp extends React.Component {
               path="/welcome/:name"
               component={WelcomeComponent}
             />
+            <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
             <Route component={ErrorComponent} />

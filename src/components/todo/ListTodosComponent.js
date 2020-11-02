@@ -11,6 +11,7 @@ class ListTodosComponent extends React.Component {
     };
 
     this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
+    this.updateTodoClicked = this.updateTodoClicked.bind(this);
     this.refreshTodos = this.refreshTodos.bind(this);
   }
 
@@ -37,6 +38,16 @@ class ListTodosComponent extends React.Component {
     });
   }
 
+  updateTodoClicked(id) {
+    console.log("update" + id);
+    this.props.history.push(`/todos/${id}`);
+    // let username = AuthenticationService.getLoggedInUserName();
+    // TodoDataService.deleteTodo(username, id).then((response) => {
+    //   this.setState({ message: `Delete of Todo of ${id} Successful` });
+    //   this.refreshTodos();
+    // });
+  }
+
   render() {
     return (
       <div>
@@ -52,6 +63,7 @@ class ListTodosComponent extends React.Component {
                 <th>Description</th>
                 <th>Target Date</th>
                 <th>Is Completed?</th>
+                <th>Update</th>
                 <th>Delete</th>
               </tr>
             </thead>
@@ -62,6 +74,14 @@ class ListTodosComponent extends React.Component {
                   <td>{todo.description}</td>
                   <td>{todo.targetDate.toString()}</td>
                   <td>{todo.done.toString()}</td>
+                  <td>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => this.updateTodoClicked(todo.id)}
+                    >
+                      Update
+                    </button>
+                  </td>
                   <td>
                     <button
                       className="btn btn-warning"
