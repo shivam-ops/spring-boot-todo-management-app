@@ -7,16 +7,26 @@ class TodoComponent extends React.Component {
     super(props);
     this.state = {
       id: 1,
-      description: "Learn Forms",
+      description: "Learn Forms now",
       targetDate: moment(new Date()).format("YYYY-MM-DD"),
     };
   }
+
+  onSubmit(values) {
+    console.log(values);
+  }
+
   render() {
+    let { description, targetDate } = this.state;
+
     return (
       <div>
         <h1>Todo</h1>
         <div className="container">
-          <Formik>
+          <Formik
+            initialValues={{ description, targetDate }}
+            onSubmit={this.onSubmit}
+          >
             {(props) => (
               <Form>
                 <fieldset className="form-group">
@@ -32,7 +42,7 @@ class TodoComponent extends React.Component {
                   <Field
                     className="form-control"
                     type="date"
-                    name="date"
+                    name="targetDate"
                   ></Field>
                 </fieldset>
                 <button className="btn btn-success" type="submit">
