@@ -22,7 +22,7 @@ class ListTodosComponent extends React.Component {
   refreshTodos() {
     let username = AuthenticationService.getLoggedInUserName();
     TodoDataService.retrieveAllTodos(username).then((response) => {
-      console.log(response);
+      console.log("todos----->", response);
 
       this.setState({
         todos: response.data,
@@ -39,7 +39,7 @@ class ListTodosComponent extends React.Component {
   }
 
   updateTodoClicked(id) {
-    console.log("update" + id);
+    console.log("update " + id);
     this.props.history.push(`/todos/${id}`);
     // let username = AuthenticationService.getLoggedInUserName();
     // TodoDataService.deleteTodo(username, id).then((response) => {

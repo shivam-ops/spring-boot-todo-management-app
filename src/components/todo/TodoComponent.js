@@ -11,7 +11,7 @@ class TodoComponent extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      id: 1,
+      id: this.props.match.params.id,
       description: "",
       targetDate: moment(new Date()).format("YYYY-MM-DD"),
     };
@@ -19,8 +19,12 @@ class TodoComponent extends React.Component {
 
   componentDidMount() {
     let username = AuthenticationService.getLoggedInUserName();
+    // TodoDataService.retrieveTodo(username, this.state.id).then((response) =>
+    //   console.log(response)
+    // );
     TodoDataService.retrieveTodo(username, this.state.id).then((response) =>
       this.setState({
+        id: response.data.id,
         description: response.data.description,
         targetDate: moment(response.data.targetDate).format("YYYY-MM-DD"),
       })
@@ -55,7 +59,7 @@ class TodoComponent extends React.Component {
 
   render() {
     let { description, targetDate } = this.state;
-
+    console.log(this.state.id);
     return (
       <div>
         <h1>Todo</h1>
